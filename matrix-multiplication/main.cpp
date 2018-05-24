@@ -21,8 +21,8 @@ int* twoDimMatrixMult(vector<vector<int> > m1, vector<vector<int> >  m2) {
             }
         }
 
-        for (int x = 0; x < m1[0].size(); x++) {
-            for (int n = 0; n < m2.size(); n++) {
+        for (int x = 0; x < m1.size(); x++) {
+            for (int n = 0; n < m2[0].size(); n++) {
                 cout << product[x][n] << " ";
             }
             cout << endl;
