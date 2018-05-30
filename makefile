@@ -1,8 +1,7 @@
-output: main.o DenseMatrix.o
-	g++ main.o DenseMatrix.o -o output
+# -Wall:  Show Compilation Errors AND Warnings
+# -std=c++17 Compile for C++ 17 Standard
 
-main.o: main.cpp
-	g++ -c main.cpp
+all : TestMatrix
 
-clean:
-	-rm *.o output
+TestMatrix:  tMatrix.cpp main.cpp
+	g++ -std=c++17 -Wall  tMatrix.cpp main.cpp -o TestMatrix
