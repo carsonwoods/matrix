@@ -11,7 +11,7 @@ ostream& operator<<(ostream& os, const tRow& V){
 	  if (iElt != V.size() - 1)
 		 os << ", ";
    }
-   os << "]"; 
+   os << "]";
    return os;
 }
 ostream& operator<<(ostream& os, const tMatrix& M){
@@ -22,7 +22,7 @@ ostream& operator<<(ostream& os, const tMatrix& M){
 	  if (iRow != M.Data.size() - 1)
 		 os << "\n ";
    }
-   os << " }"; 
+   os << " }";
    return os;
 }
 const tRC tMatrix::size() const {
@@ -53,7 +53,7 @@ tMatrix::tMatrix(size_t pNumRows, size_t pNumCols) {
 #ifdef xDEBUG
    printf("tMatrix(%ld,%ld): RETURN.\n",pNumRows,pNumCols);
 #endif
-   
+
 }
 tMatrix::tMatrix(initializer_list<tRow> il)
    : Data(il) {
@@ -62,7 +62,7 @@ tMatrix::tMatrix(initializer_list<tRow> il)
 #endif
    // TODO: Implement for Learning Purposes
 #ifdef DEBUG
-   printf ("tMatrix(IL): RETURN.\n");   
+   printf ("tMatrix(IL): RETURN.\n");
 #endif
 }
 tMatrix tMatrix::operator*(const tMatrix& RHS) const  {
@@ -73,7 +73,7 @@ tMatrix tMatrix::operator*(const tMatrix& RHS) const  {
 		 // TODO: printf
 		 return tMatrix();
 	  }
-	  
+
 	  tMatrix RET(LHS.size().NumRows,RHS.size().NumCols) ;
 	  // TODO: printf
 	  int Sum = 0;
@@ -89,49 +89,3 @@ tMatrix tMatrix::operator*(const tMatrix& RHS) const  {
 	  }
 	  return RET;
    }
-
-
-//#include <cmath>
-//#include <iostream>
-//using namespace std;
-
-//   int qRows(); // Query Row Count
-//   int qCols(); // Query Col Count
-  // //default constructor creates an empty 0x0 array
-    // DenseMatrix() {
-    //     rows = 0;
-    //     columns = 0;
-    //     intializeMatrix();
-    // }
-/*
-    void setRows(int rowAmt) {
-        rows = rowAmt;
-        intializeMatrix();
-    }
-
-    void setColumns(int colAmt) {
-        columns = colAmt;
-        intializeMatrix();
-    }
-
-    int qRows() const{
-        return rows;
-    }
-
-    int qColumns() const {
-        return columns;
-    }
-
-    vector<vector<int> > getMatrix() {
-        return denseMatrix;
-    }
-
-    void setMatrixValue(int r, int c, int value) {
-        denseMatrix[r][c] = value;
-    }
-
-    void intializeMatrix() {
-
-       
-    }
-*/
