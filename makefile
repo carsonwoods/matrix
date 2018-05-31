@@ -3,5 +3,5 @@
 
 all : TestMatrix
 
-TestMatrix:  tMatrix.cpp main.cpp
+TestMatrix: tMatrix.cpp main.cpp
 	g++ -std=c++17 -Wall  tMatrix.cpp main.cpp -o TestMatrix
