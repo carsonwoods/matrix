@@ -66,26 +66,31 @@ tMatrix::tMatrix(initializer_list<tRow> il)
 #endif
 }
 tMatrix tMatrix::operator*(const tMatrix& RHS) const  {
-   const tMatrix LHS(*this);
-   printf ("%ld",LHS.size().NumCols);
-   // TODO: printf
-   if (((LHS.size()).NumCols) != ((RHS.size()).NumRows)){
-		 // TODO: printf
-		 return tMatrix();
-	  }
+    const tMatrix LHS(*this);
 
-	  tMatrix RET(LHS.size().NumRows,RHS.size().NumCols) ;
-	  // TODO: printf
-	  int Sum = 0;
+    printf("tMatrix::operator*(): Enter.\n");
 
-	  for (size_t iRow(0); iRow < LHS.size().NumRows; iRow++) {
-		 for (size_t iCol(0); iCol < LHS.size().NumRows; iCol++) {
-			Sum = 0;
-			for (size_t iSum(0); iSum < RHS.size().NumRows; iSum++) {
-			   Sum += LHS.Data[iRow][iSum] * RHS.Data[iSum][iCol];
+    //test for dimensional mismatch
+    if (((LHS.size()).NumCols) != ((RHS.size()).NumRows)){
+        printf("Error: Columns of LHS and Rows of RHS must Match.\n");
+        printf("Current Columns: %ld\n",LHS.size().NumCols);
+        printf("Current Rows: %ld\n",RHS.size().NumRows);
+        return tMatrix();
+	}
+
+	tMatrix RET(LHS.size().NumRows,RHS.size().NumCols);
+    // TODO: printf
+    printf("tMatrix of dim: %ldx%ld",RET.size().NumRows,RET.size().NumCols);
+	int Sum = 0;
+
+	for (size_t iRow(0); iRow < LHS.size().NumRows; iRow++) {
+	    for (size_t iCol(0); iCol < LHS.size().NumRows; iCol++) {
+		    Sum = 0;
+		    for (size_t iSum(0); iSum < RHS.size().NumRows; iSum++) {
+			    Sum += LHS.Data[iRow][iSum] * RHS.Data[iSum][iCol];
 			}
-			RET.Data[iRow][iCol] = Sum;
-		 }
-	  }
-	  return RET;
-   }
+		    RET.Data[iRow][iCol] = Sum;
+		}
+	}
+	return RET;
+}
