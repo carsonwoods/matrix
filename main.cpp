@@ -14,8 +14,8 @@ int main(int argc, char *argv[]){
 	     << "oDM2: " << endl << oDM2 << endl
 	     << "oDM3: " << endl << oDM3 << endl
 		 << "oDM4: " << endl << oDM4 << endl
-		 << "oDM5: " << endl << oDM5 << endl;
-
+		 << "oDM5: " << endl << oDM5 << endl
+         << "oDM5[2][2]: " << endl << oDM5[1][1] << endl;
 		 //*pDM3;    // Call Default Constructor at Runtime
 		 //*pDM4(3,4),   //
 		 //*pDM1(&oDM1),
