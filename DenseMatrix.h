@@ -39,6 +39,11 @@ class DenseMatrix {
             }
         }
 
+
+        //DenseMatrix(DenseMatrix& _ToCopy) {
+        //    this = _ToCopy;
+        //}
+
         //clears data when object leaves scope
         virtual ~DenseMatrix() {delete[] Data;}
 
@@ -80,6 +85,41 @@ class DenseMatrix {
         //overloads () operator for retrieving a const value at a certain location
         const double& operator()(size_t _R, size_t _C) const {
             return Data[(_R*Columns)+_C];
+        }
+
+
+        //overloads multiplication operator
+        DenseMatrix operator*(const DenseMatrix& RHS) const  {
+            const DenseMatrix LHS(*this);
+
+            printf("DenseMatrix::operator*(): Enter.\n");
+
+            //test for dimensional mismatch
+            if (((LHS.Columns != RHS.Rows))) {
+                printf("Error: Columns of LHS and Rows of RHS must Match.\n");
+                printf("Current Columns: %ld\n",LHS.Columns);
+                printf("Current Rows: %ld\n",RHS.Rows);
+                return DenseMatrix();
+        	}
+
+        	DenseMatrix RET(LHS.Rows,RHS.Columns);
+            cout << RET << endl;
+
+            // TODO: printf
+            printf("DenseMatrix of dim: %ldx%ld",RET.Rows,RET.Columns);
+        	double Sum = 0;
+
+        	for (size_t iRow(0); iRow < LHS.Rows; iRow++) {
+        	    for (size_t iCol(0); iCol < LHS.Rows; iCol++) {
+        		    Sum = 0;
+        		    for (size_t iSum(0); iSum < RHS.Rows; iSum++) {
+        			    Sum += LHS(iRow, iSum) * RHS(iSum,iCol);
+        			}
+                    //cout << iRow << "," << iCol << endl;
+        		    RET(iRow, iCol) = Sum;
+        		}
+        	}
+        	return RET;
         }
 
         friend ostream& operator<<(ostream& os, const DenseMatrix &DM) {
