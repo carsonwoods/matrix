@@ -6,9 +6,10 @@
 
 #include <iostream> //cout
 
-using namespace std;
+using namespace std; //sets default namespace: standard
 
 class DenseMatrix {
+
     protected:
         size_t Rows,Columns;
         double *Data;
@@ -43,8 +44,8 @@ class DenseMatrix {
         //initializer_list constructor
         DenseMatrix(initializer_list< initializer_list<double> > _Il) {
             //sets size of matrix based on size of _Il
-            Rows = _Il.size();
-            Columns= _Il.begin()->size();
+            Rows = _Il.size(); //gets row size from external iterator list size
+            Columns= _Il.begin()->size(); //gets column size from internal iterator list size
             Data = new double[Rows*Columns];
 
             //define indices for data
@@ -65,7 +66,6 @@ class DenseMatrix {
         //clears data when object leaves scope
         virtual ~DenseMatrix() {
             delete[] Data;
-            cout << "~DenseMatrix(): Return" << endl;
         }
 
 
@@ -90,14 +90,12 @@ class DenseMatrix {
                 this->Rows = _RHS.Rows;
                 this->Columns = _RHS.Columns;
                 Data = new double[Rows*Columns];
-
             }
 
             //populates this->Data with data from parameter
             for (size_t iElement(0); iElement < (Rows*Columns); iElement++) {
                 Data[iElement] = _RHS.Data[iElement];
             }
-
             return *this;
         }
 
@@ -113,7 +111,7 @@ class DenseMatrix {
 
         DenseMatrix& operator=(DenseMatrix&& _DM) {
             if (this != &_DM) {
-                delete[] Data;
+                delete[] Data; //ensures Data is clear before proceeding
 
                 Data = _DM.Data;
                 Rows = _DM.Rows;
@@ -130,9 +128,6 @@ class DenseMatrix {
         //overloads multiplication operator
         DenseMatrix operator*(const DenseMatrix& RHS) const  {
             const DenseMatrix &LHS(*this);
-
-
-            printf("DenseMatrix::operator*(): Enter.\n");
 
             //test for dimensional mismatch
             if (((LHS.Columns != RHS.Rows))) {
@@ -155,7 +150,6 @@ class DenseMatrix {
         		    RET(iRow, iCol) = Sum;
         		}
         	}
-
         	return RET;
         }
 
@@ -176,5 +170,4 @@ class DenseMatrix {
             }
             return os;
         }
-
 };
