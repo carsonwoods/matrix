@@ -26,9 +26,13 @@ int main(int argc, char *argv[]){
         oDM2{{1,1},{1,1},{1,1}},
         oDM3(oDM1*oDM2);
 
+    //cout << "oDM3: " << endl << oDM3 << endl;
+
+
     cout << "oDM1: " << endl << oDM1 << endl
          << "oDM2: " << endl << oDM2 << endl
          << "oDM3: " << endl << oDM3 << endl;
+
 
 
     /* OLD DRIVER CODE FOR DEPRECATED tMatrix Class */

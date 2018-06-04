@@ -18,6 +18,27 @@ class DenseMatrix {
         DenseMatrix(size_t _R=0,size_t _C=0) :
             Rows(_R), Columns(_C), Data(new double[Rows*Columns]) {}
 
+        //copy constructor
+        DenseMatrix(const DenseMatrix& _DM) {
+            cout << "Why is this happening" << endl;
+            this->Rows = _DM.Rows;
+            this->Columns = _DM.Columns;
+            this->Data = _DM.Data;
+        }
+
+        //move constructor
+        DenseMatrix(DenseMatrix&& _DM) {
+            //Moves resources to new DenseMatric object
+            this->Rows = _DM.Rows;
+            this->Columns = _DM.Columns;
+            this->Data = _DM.Data;
+
+            //Releases resources of Dense Matrix parameter
+            _DM.Data = nullptr;
+            _DM.Rows = 0;
+            _DM.Columns = 0;
+        }
+
         //initializer_list constructor
         DenseMatrix(initializer_list< initializer_list<double> > _Il) {
             //sets size of matrix based on size of _Il
@@ -40,13 +61,15 @@ class DenseMatrix {
         }
 
 
-        //DenseMatrix(DenseMatrix& _ToCopy) {
-        //    this = _ToCopy;
-        //}
-
         //clears data when object leaves scope
-        virtual ~DenseMatrix() {delete[] Data;}
+        virtual ~DenseMatrix() {
+            delete[] Data;
+            cout << "~DenseMatrix(): Return" << endl;
+        }
 
+
+        //Gets data[index] at (Row,Column) location in Data
+        const size_t Index(const size_t _R, const size_t _C) const { return (_R*Columns)+_C; }
 
         /*
         *     ** Overloaded Operators **
@@ -79,14 +102,30 @@ class DenseMatrix {
 
         //overloads () operator for assigning a certain value at a certain location
         double& operator()(size_t _R, size_t _C) {
-            return Data[(_R*Columns)+_C];
+            return Data[Index(_R,_C)];
         }
 
         //overloads () operator for retrieving a const value at a certain location
         const double& operator()(size_t _R, size_t _C) const {
-            return Data[(_R*Columns)+_C];
+            return Data[Index(_R,_C)];
         }
 
+        DenseMatrix& operator=(DenseMatrix&& _DM) {
+            if (this != &_DM) {
+                delete[] Data;
+
+                Data = _DM.Data;
+                Rows = _DM.Rows;
+                Columns = _DM.Columns;
+
+                //Releases resources of Dense Matrix parameter
+                _DM.Data = nullptr;
+                _DM.Rows = 0;
+                _DM.Columns = 0;
+
+            }
+            return *this;
+        }
 
         //overloads multiplication operator
         DenseMatrix operator*(const DenseMatrix& RHS) const  {
@@ -103,22 +142,24 @@ class DenseMatrix {
         	}
 
         	DenseMatrix RET(LHS.Rows,RHS.Columns);
-            cout << RET << endl;
 
             // TODO: printf
-            printf("DenseMatrix of dim: %ldx%ld",RET.Rows,RET.Columns);
-        	double Sum = 0;
+            //printf("DenseMatrix of dim: %ldx%ld",RET.Rows,RET.Columns);
+
+            double Sum = 0;
 
         	for (size_t iRow(0); iRow < LHS.Rows; iRow++) {
-        	    for (size_t iCol(0); iCol < LHS.Rows; iCol++) {
+        	    for (size_t iCol(0); iCol < RHS.Columns; iCol++) {
         		    Sum = 0;
         		    for (size_t iSum(0); iSum < RHS.Rows; iSum++) {
         			    Sum += LHS(iRow, iSum) * RHS(iSum,iCol);
         			}
-                    //cout << iRow << "," << iCol << endl;
         		    RET(iRow, iCol) = Sum;
         		}
         	}
+
+
+            cout << "Ret: " << endl << RET << endl;
         	return RET;
         }
 
@@ -139,4 +180,5 @@ class DenseMatrix {
             }
             return os;
         }
+        
 };
