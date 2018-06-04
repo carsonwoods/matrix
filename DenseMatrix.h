@@ -37,6 +37,7 @@ class DenseMatrix {
             _DM.Data = nullptr;
             _DM.Rows = 0;
             _DM.Columns = 0;
+
         }
 
         //initializer_list constructor
@@ -122,14 +123,14 @@ class DenseMatrix {
                 _DM.Data = nullptr;
                 _DM.Rows = 0;
                 _DM.Columns = 0;
-
             }
             return *this;
         }
 
         //overloads multiplication operator
         DenseMatrix operator*(const DenseMatrix& RHS) const  {
-            const DenseMatrix LHS(*this);
+            const DenseMatrix &LHS(*this);
+
 
             printf("DenseMatrix::operator*(): Enter.\n");
 
@@ -143,9 +144,6 @@ class DenseMatrix {
 
         	DenseMatrix RET(LHS.Rows,RHS.Columns);
 
-            // TODO: printf
-            //printf("DenseMatrix of dim: %ldx%ld",RET.Rows,RET.Columns);
-
             double Sum = 0;
 
         	for (size_t iRow(0); iRow < LHS.Rows; iRow++) {
@@ -158,8 +156,6 @@ class DenseMatrix {
         		}
         	}
 
-
-            cout << "Ret: " << endl << RET << endl;
         	return RET;
         }
 
@@ -180,5 +176,5 @@ class DenseMatrix {
             }
             return os;
         }
-        
+
 };
