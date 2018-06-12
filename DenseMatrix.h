@@ -14,10 +14,11 @@ using namespace std; //sets default namespace: standard
 
 class DenseMatrix {
 
-    public:
-
+    protected:
         size_t Rows,Columns;
         double *Data;
+
+    public:    
 
         //Gets data[index] at (Row,Column) location in Data
         const size_t Index(const size_t _R, const size_t _C) const;

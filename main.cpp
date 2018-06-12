@@ -15,7 +15,6 @@ int main(int argc, char *argv[]){
          << "oDM3: " << endl << oDM3 << endl;
 
 
-
     /* OLD DRIVER CODE FOR DEPRECATED tMatrix Class */
     /*
     tMatrix
