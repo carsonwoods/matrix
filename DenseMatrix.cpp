@@ -10,6 +10,8 @@
 
 using namespace std;
 
+
+
 template <typename T>
 DenseMatrix<T>::~DenseMatrix() {                                   //Destructor
     delete[] Data;
@@ -150,7 +152,8 @@ DenseMatrix<T> DenseMatrix<T>::operator*(const DenseMatrix& RHS) const  {
 }
 
 //Overloads << operator
-template <typename T>
+//template <typename T>
+/*
 ostream& operator<<(ostream& os, const DenseMatrix<T> &DM) {
     os << "{";
     for (size_t R(0); R < DM.Rows; R++) {
@@ -167,4 +170,4 @@ ostream& operator<<(ostream& os, const DenseMatrix<T> &DM) {
     }
     os << " }";
     return os;
-}
+}*/

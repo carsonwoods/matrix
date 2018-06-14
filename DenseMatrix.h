@@ -40,8 +40,27 @@ class DenseMatrix {
             { return Data[Index(_R,_C)]; }                             //const value at a certain location
 
         DenseMatrix operator*(const DenseMatrix & RHS) const;            //overloads multiplication operator
-        friend ostream& operator<<(ostream& os, const DenseMatrix &DM);  //overloads << operator
+
+        friend ostream& operator<<(ostream& os, const DenseMatrix<T> &DM) {
+            os << "{";
+            for (size_t R(0); R < DM.Rows; R++) {
+                os << " ";
+                os << "[";
+                for (size_t C(0); C < DM.Columns; C++) {
+                    os << " " << DM(R,C);
+                }
+                if (R != DM.Rows-1) {
+                    os << " ]" << endl << " ";
+                } else {
+                    os << " ]";
+                }
+            }
+            os << " }";
+            return os;
+        }
+
 };
+
 
 
 #endif
