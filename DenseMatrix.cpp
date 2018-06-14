@@ -10,29 +10,29 @@
 
 using namespace std;
 
-template <class T>
+template <typename T>
 DenseMatrix<T>::~DenseMatrix() {                                   //Destructor
     delete[] Data;
 }
 
-template <class T>
+template <typename T>
 DenseMatrix<T>::DenseMatrix() {                                    //Default Constructor
     DenseMatrix(0,0);
 }
 
-template <class T>
+template <typename T>
 DenseMatrix<T>::DenseMatrix(size_t _R,size_t _C) :                 //Initializer constructor
     Rows(_R), Columns(_C), Data(new T[Rows*Columns]) {}
 
-template <class T>
-DenseMatrix<T>::DenseMatrix(const DenseMatrix& _DM) {              //Copy Constructor
+template <typename T>
+DenseMatrix<T>::DenseMatrix(const DenseMatrix& _DM) {          //Copy Constructor
     this->Rows = _DM.Rows;
     this->Columns = _DM.Columns;
     this->Data = _DM.Data;
 }
 
-template <class T>
-DenseMatrix<T>::DenseMatrix(DenseMatrix&& _DM) {                   //Move Constructor
+template <typename T>
+DenseMatrix<T>::DenseMatrix(DenseMatrix&& _DM) {               //Move Constructor
     //Moves resources to new DenseMatric object
     this->Rows = _DM.Rows;
     this->Columns = _DM.Columns;
@@ -46,7 +46,7 @@ DenseMatrix<T>::DenseMatrix(DenseMatrix&& _DM) {                   //Move Constr
 }
 
 
-template <class T>
+template <typename T>
 DenseMatrix<T>::DenseMatrix(initializer_list< initializer_list< T > > _Il) { //Initializer List Constructor
     //Sets size of matrix based on size of _Il
     Rows = _Il.size(); //Gets row size from external iterator list size
@@ -69,7 +69,7 @@ DenseMatrix<T>::DenseMatrix(initializer_list< initializer_list< T > > _Il) { //I
 
 
 //Gets data[index] at (Row,Column) location in Data
-template <class T>
+template <typename T>
 const size_t DenseMatrix<T>::Index(const size_t _R, const size_t _C) const { return (_R*Columns)+_C; }
 
 
@@ -78,7 +78,7 @@ const size_t DenseMatrix<T>::Index(const size_t _R, const size_t _C) const { ret
 */
 
 //Overloads assignment operator for copy
-template <class T>
+template <typename T>
 DenseMatrix<T> & DenseMatrix<T>::operator=(const DenseMatrix &_RHS) {
     //Checks for self assignment
     if (&_RHS == this) {
@@ -102,8 +102,8 @@ DenseMatrix<T> & DenseMatrix<T>::operator=(const DenseMatrix &_RHS) {
 }
 
 //Overloads assignment operator for move
-template <class T>
-DenseMatrix<T> & DenseMatrix<T>::operator=(DenseMatrix&& _DM) {
+template <typename T>
+DenseMatrix<T> & DenseMatrix<T>::operator=(DenseMatrix &&_DM) {
     if (this != &_DM) {
         delete[] Data; //Ensures Data is clear before proceeding
 
@@ -120,9 +120,9 @@ DenseMatrix<T> & DenseMatrix<T>::operator=(DenseMatrix&& _DM) {
 }
 
 //Overloads multiplication operator
-template <class T>
+template <typename T>
 DenseMatrix<T> DenseMatrix<T>::operator*(const DenseMatrix& RHS) const  {
-    const DenseMatrix &LHS(*this);
+    const DenseMatrix<T> &LHS(*this);
 
     //Test for dimensional mismatch
     if (((LHS.Columns != RHS.Rows))) {
@@ -132,7 +132,8 @@ DenseMatrix<T> DenseMatrix<T>::operator*(const DenseMatrix& RHS) const  {
         return DenseMatrix();
     }
 
-    DenseMatrix RET(LHS.Rows,RHS.Columns);
+
+    DenseMatrix<T> RET(LHS.Rows,RHS.Columns);
 
     double Sum = 0;
 
@@ -149,7 +150,7 @@ DenseMatrix<T> DenseMatrix<T>::operator*(const DenseMatrix& RHS) const  {
 }
 
 //Overloads << operator
-template <class T>
+template <typename T>
 ostream& operator<<(ostream& os, const DenseMatrix<T> &DM) {
     os << "{";
     for (size_t R(0); R < DM.Rows; R++) {
