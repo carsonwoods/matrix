@@ -1,7 +1,7 @@
 /*
 *   DenseMatrix.cpp
 *   Written by Carson Woods and Dan Mailman
-*   6/1/2018
+*   2018
 */
 
 #include "DenseMatrix.h"
@@ -9,8 +9,6 @@
 #include <iostream> //Imports cout
 
 using namespace std;
-
-
 
 template <typename T>
 DenseMatrix<T>::~DenseMatrix() {                                   //Destructor

@@ -1,7 +1,7 @@
 /*
 *   DenseMatrix.h
 *   Written by Carson Woods and Dan Mailman
-*   6/1/2018
+*   2018
 */
 
 #ifndef MATRIX_H
@@ -58,6 +58,8 @@ class DenseMatrix {
             os << " }";
             return os;
         }
+
+        
 
 };
 
