@@ -26,9 +26,12 @@ DenseMatrix<T>::DenseMatrix(size_t _R,size_t _C) :                 //Initializer
 
 template <typename T>
 DenseMatrix<T>::DenseMatrix(const DenseMatrix& _DM) {          //Copy Constructor
-    this->Rows = _DM.Rows;
-    this->Columns = _DM.Columns;
-    this->Data = _DM.Data;
+    Rows = _DM.Rows;
+    Columns = _DM.Columns;
+    Data = new T[Rows*Columns];
+    for (size_t x(0); x < Rows*Columns; x++) {
+        Data[x] = _DM.Data[x];
+    }
 }
 
 template <typename T>
