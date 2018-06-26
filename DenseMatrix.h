@@ -4,8 +4,8 @@
 *   2018
 */
 
-#ifndef MATRIX_H
-#define MATRIX_H
+#ifndef DENSEMATRIX_H
+#define DENSEMATRIX_H
 
 
 #include <iostream> //cout
@@ -59,7 +59,7 @@ class DenseMatrix {
             return os;
         }
 
-        
+
 
 };
 
