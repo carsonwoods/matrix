@@ -4,6 +4,7 @@
 *   2018
 */
 
+
 #ifndef DENSESHADOWMATRIX_H
 #define DENSESHADOWMATRIX_H
 
@@ -31,6 +32,7 @@ class DenseShadowMatrix {
         DenseShadowMatrix &operator=(DenseShadowMatrix &&_DSM);                    //move operator
 
         bool CheckIfEqual(DenseMatrix<T> &_DM);
+
 
         T &operator()(size_t _R, size_t _C)                            //overloads () operator for assigning a
             { return Data[Index(_R,_C)]; }                             //certain value at a certain location

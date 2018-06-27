@@ -7,14 +7,13 @@
 #ifndef DENSEMATRIX_H
 #define DENSEMATRIX_H
 
-
 #include <iostream> //cout
 
 using namespace std; //sets default namespace: standard
 
 template <typename T>
 class DenseMatrix {
-        
+
     public:
         size_t Rows,Columns;
         T *Data;
@@ -31,6 +30,7 @@ class DenseMatrix {
         DenseMatrix &operator=(const DenseMatrix &_RHS);               //overloads copy operator
         DenseMatrix &operator=(DenseMatrix &&_DM);                     //move operator
 
+        void Update(DenseShadowMatrix<T> &_DSM);
 
         T &operator()(size_t _R, size_t _C)                            //overloads () operator for assigning a
             { return Data[Index(_R,_C)]; }                             //certain value at a certain location
@@ -57,9 +57,6 @@ class DenseMatrix {
             os << " }";
             return os;
         }
-
-
-
 };
 
 

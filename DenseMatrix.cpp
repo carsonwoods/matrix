@@ -5,7 +5,7 @@
 */
 
 #include "DenseMatrix.h"
-#include <iostream> //Imports cout
+#include "DenseShadowMatrix.h"
 
 using namespace std;
 
@@ -149,4 +149,16 @@ DenseMatrix<T> DenseMatrix<T>::operator*(const DenseMatrix& RHS) const  {
         }
     }
     return RET;
+}
+
+
+template <typename T>
+void DenseMatrix<T>::Update(DenseShadowMatrix<T> &_DSM) {
+    //brings DenseMatrix up to date with parameter shadow matrix.
+    Rows = _DSM.Rows;
+    Columns = _DSM.Columns;
+    Data = new T[Rows*Columns];
+    for (size_t x(0); x < _DSM.Rows*_DSM.Columns; x++) {
+        Data[x] = _DSM.Data[x];
+    }
 }
