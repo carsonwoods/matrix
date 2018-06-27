@@ -1,5 +1,5 @@
 /*
-*   DenseCudaMatrix.h
+*   DenseShadowMatrix.h
 *   Written by Carson Woods
 *   2018
 */
@@ -14,12 +14,9 @@ using namespace std;
 template <typename T>
 class DenseShadowMatrix {
 
-    protected:
+    public:
         size_t Rows,Columns;
         T *Data;
-
-    public:
-
 
         //Gets data[index] at (Row,Column) location in Data
         const size_t Index(const size_t _R, const size_t _C) const;
@@ -27,11 +24,13 @@ class DenseShadowMatrix {
         DenseShadowMatrix();
         DenseShadowMatrix(size_t _R, size_t _C);
         virtual ~DenseShadowMatrix();                                              //Destructor
-        DenseShadowMatrix(const DenseShadowMatrix &_DSM);                           //copy constructor
-        DenseShadowMatrix(DenseShadowMatrix &&_DSM);                                //move constructor
-        DenseShadowMatrix(const DenseMatrix<T> &_DSM);                              //copy DenseMatrix constructor
+        DenseShadowMatrix(const DenseShadowMatrix &_DSM);                          //copy constructor
+        DenseShadowMatrix(DenseShadowMatrix &&_DSM);                               //move constructor
+        DenseShadowMatrix(const DenseMatrix<T> &_DM);                             //copy DenseMatrix constructor
         DenseShadowMatrix &operator=(const DenseShadowMatrix &_RHS);               //overloads copy operator
-        DenseShadowMatrix &operator=(DenseShadowMatrix &&_DSM);                     //move operator
+        DenseShadowMatrix &operator=(DenseShadowMatrix &&_DSM);                    //move operator
+
+        bool CheckIfEqual(DenseMatrix<T> &_DM);
 
         T &operator()(size_t _R, size_t _C)                            //overloads () operator for assigning a
             { return Data[Index(_R,_C)]; }                             //certain value at a certain location
@@ -42,8 +41,7 @@ class DenseShadowMatrix {
         friend ostream& operator<<(ostream& os, const DenseShadowMatrix<T> &DSM) {
             os << "{";
             for (size_t R(0); R < DSM.Rows; R++) {
-                os << " ";
-                os << "[";
+                os << " [";
                 for (size_t C(0); C < DSM.Columns; C++) {
                     os << " " << DSM(R,C);
                 }

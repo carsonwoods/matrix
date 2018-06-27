@@ -110,6 +110,21 @@ DenseShadowMatrix<T> & DenseShadowMatrix<T>::operator=(DenseShadowMatrix &&_DSM)
     return *this;
 }
 
+template <typename T>
+bool DenseShadowMatrix<T>::CheckIfEqual(DenseMatrix<T> &_DM) {
+    if ((Rows == _DM.Rows) && (Columns == _DM.Columns)) {
+        for (size_t x(0); x < Rows*Columns; x++) {
+            if (Data[x] != _DM.Data[x]) {
+                return false;
+            }
+        }
+        return true;
+    } else {
+        cout << "false" << endl;
+        return false;
+    }
+}
+
 int main(int argc, char *argv[]) {
 
     //Driver for tests
@@ -129,6 +144,8 @@ int main(int argc, char *argv[]) {
     DenseShadowMatrix<double> denseShadowMatrix1(oDM1);
 
     cout << "denseShadowMatrix1: " << endl << denseShadowMatrix1 << endl;
+
+    cout << "Is DenseShadowMatrix1 == oDM1?: " << denseShadowMatrix1.CheckIfEqual(oDM1) << endl;
 
     return 0;
 }

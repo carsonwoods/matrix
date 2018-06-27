@@ -14,12 +14,11 @@ using namespace std; //sets default namespace: standard
 
 template <typename T>
 class DenseMatrix {
-
-    public: //should be protected but temporarily ignore for testing
+        
+    public:
         size_t Rows,Columns;
         T *Data;
 
-    public:
         //Gets data[index] at (Row,Column) location in Data
         const size_t Index(const size_t _R, const size_t _C) const;
 
