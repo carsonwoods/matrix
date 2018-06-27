@@ -29,9 +29,33 @@ class DenseShadowMatrix {
         virtual ~DenseShadowMatrix();                                              //Destructor
         DenseShadowMatrix(const DenseShadowMatrix &_DSM);                           //copy constructor
         DenseShadowMatrix(DenseShadowMatrix &&_DSM);                                //move constructor
-        DenseShadowMatrix(const DenseMatrix<T> &_DSM);                          //initializer_list constructor
+        DenseShadowMatrix(const DenseMatrix<T> &_DSM);                              //copy DenseMatrix constructor
         DenseShadowMatrix &operator=(const DenseShadowMatrix &_RHS);               //overloads copy operator
         DenseShadowMatrix &operator=(DenseShadowMatrix &&_DSM);                     //move operator
+
+        T &operator()(size_t _R, size_t _C)                            //overloads () operator for assigning a
+            { return Data[Index(_R,_C)]; }                             //certain value at a certain location
+
+        const T &operator()(size_t _R, size_t _C) const                //overloads () operator for retrieving a
+            { return Data[Index(_R,_C)]; }                             //const value at a certain location
+
+        friend ostream& operator<<(ostream& os, const DenseShadowMatrix<T> &DSM) {
+            os << "{";
+            for (size_t R(0); R < DSM.Rows; R++) {
+                os << " ";
+                os << "[";
+                for (size_t C(0); C < DSM.Columns; C++) {
+                    os << " " << DSM(R,C);
+                }
+                if (R != DSM.Rows-1) {
+                    os << " ]" << endl << " ";
+                } else {
+                    os << " ]";
+                }
+            }
+            os << " }";
+            return os;
+        }
 };
 
 #endif

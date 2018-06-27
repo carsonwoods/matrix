@@ -15,7 +15,7 @@ using namespace std; //sets default namespace: standard
 template <typename T>
 class DenseMatrix {
 
-    protected:
+    public: //should be protected but temporarily ignore for testing
         size_t Rows,Columns;
         T *Data;
 
