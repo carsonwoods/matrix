@@ -5,7 +5,6 @@
 */
 
 #include "DenseMatrix.h"
-
 #include <iostream> //Imports cout
 
 using namespace std;

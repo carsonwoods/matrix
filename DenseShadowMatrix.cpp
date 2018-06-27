@@ -4,13 +4,18 @@
 *   2018
 */
 
-#include <iostream> //cout
 #include "DenseMatrix.h"
+#include "DenseMatrix.cpp"
 #include "DenseShadowMatrix.h"
 
 
 
 using namespace std;
+
+template <typename T>
+DenseShadowMatrix<T>::~DenseShadowMatrix() {                                   //Destructor
+    delete[] Data;
+}
 
 template <typename T>
 DenseShadowMatrix<T>::DenseShadowMatrix() {
