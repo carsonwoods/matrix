@@ -5,7 +5,6 @@
 */
 
 #include "DenseMatrix.h"
-#include "DenseShadowMatrix.h"
 
 using namespace std;
 
@@ -153,7 +152,7 @@ DenseMatrix<T> DenseMatrix<T>::operator*(const DenseMatrix& RHS) const  {
 
 
 template <typename T>
-void DenseMatrix<T>::Update(DenseShadowMatrix<T> &_DSM) {
+void DenseMatrix<T>::Update(DenseMatrix<T>::DenseShadowMatrix &_DSM) {
     //brings DenseMatrix up to date with parameter shadow matrix.
     Rows = _DSM.Rows;
     Columns = _DSM.Columns;

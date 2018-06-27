@@ -1,7 +1,5 @@
 #include <iostream> // cout
-#include "DenseMatrix.h"
 #include "DenseMatrix.cpp"
-#include "DenseMatrix.h"
 #include "DenseShadowMatrix.cpp"
 
 using namespace std; // cout
@@ -21,12 +19,10 @@ int main(int argc, char *argv[]){
          << "oDM3: " << endl << oDM3 << endl
          << "oDM4: " << endl << oDM4 << endl;
 
+    DenseMatrix<double>::DenseShadowMatrix test(oDM1);
 
-    DenseShadowMatrix<double> denseShadowMatrix1(oDM1);
+    oDM2.Update(test);
 
-    cout << "denseShadowMatrix1: " << endl << denseShadowMatrix1 << endl;
-
-    //oDM2.Update(oDM1);
     cout << "oDM2: " << endl << oDM2 << endl;
 
 
