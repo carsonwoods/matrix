@@ -18,10 +18,10 @@ class DenseMatrix {
 
 public:
     class DenseShadowMatrix {
-    public:
+    private:
         size_t Rows,Columns;
         T *Data;
-
+    public:
         //Gets data[index] at (Row,Column) location in Data
         const size_t Index(const size_t _R, const size_t _C) const;
 
@@ -96,14 +96,18 @@ public:
             os << " }";
             return os;
         }
+
+        friend class DenseMatrix;
+
     };
 
 
     //beginning of DenseMatrix Class
-
+private:
     size_t Rows,Columns;
     T *Data;
 
+public:
     //Gets data[index] at (Row,Column) location in Data
     const size_t Index(const size_t _R, const size_t _C) const;
 
@@ -152,6 +156,10 @@ public:
         os << " }";
         return os;
     }
+
+    //declare friend class
+    friend class DenseShadowMatrix;
+
 };
 
 #endif
