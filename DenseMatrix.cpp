@@ -23,7 +23,7 @@ DenseMatrix<T>::DenseMatrix(size_t _R,size_t _C) :                 //Initializer
     Rows(_R), Columns(_C), Data(new T[Rows*Columns]) {}
 
 template <typename T>
-DenseMatrix<T>::DenseMatrix(const DenseMatrix& _DM) {          //Copy Constructor
+DenseMatrix<T>::DenseMatrix(const DenseMatrix& _DM) {              //Copy Constructor
     Rows = _DM.Rows;
     Columns = _DM.Columns;
     Data = new T[Rows*Columns];
@@ -33,7 +33,7 @@ DenseMatrix<T>::DenseMatrix(const DenseMatrix& _DM) {          //Copy Constructo
 }
 
 template <typename T>
-DenseMatrix<T>::DenseMatrix(DenseMatrix&& _DM) {               //Move Constructor
+DenseMatrix<T>::DenseMatrix(DenseMatrix&& _DM) {                   //Move Constructor
     //Moves resources to new DenseMatric object
     this->Rows = _DM.Rows;
     this->Columns = _DM.Columns;
@@ -45,7 +45,6 @@ DenseMatrix<T>::DenseMatrix(DenseMatrix&& _DM) {               //Move Constructo
     _DM.Columns = 0;
 
 }
-
 
 template <typename T>
 DenseMatrix<T>::DenseMatrix(initializer_list< initializer_list< T > > _Il) { //Initializer List Constructor
@@ -150,8 +149,6 @@ DenseMatrix<T> & DenseMatrix<T>::operator=(DenseMatrix &&_DM) {
     return *this;
 }
 
-
-
 //Overloads copy operator to update data from DenseShadowMatrix
 template <typename T>
 DenseMatrix<T>& DenseMatrix<T>::operator=(const DenseMatrix<T>::DenseShadowMatrix &_RHS) {
@@ -204,3 +201,11 @@ bool DenseMatrix<T>::operator==(DenseMatrix<T>::DenseShadowMatrix &_DSM) {
         return false;
     }
 }
+
+template <typename T>
+const T &DenseMatrix<T>::operator()(size_t _R, size_t _C) const                 //overloads () operator for retrieving a
+    { return Data[Index(_R,_C)]; }                                              //const value at a certain location
+
+template <typename T>
+T &DenseMatrix<T>::operator()(size_t _R, size_t _C)                             //overloads () operator for retrieving a
+    { return Data[Index(_R,_C)]; }                                              //const value at a certain location

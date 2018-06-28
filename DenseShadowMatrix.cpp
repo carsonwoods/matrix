@@ -9,25 +9,22 @@
 using namespace std;
 
 template <typename T>
-const size_t DenseMatrix<T>::DenseShadowMatrix::Index(const size_t _R, const size_t _C) const { return (_R*Columns)+_C; }
-
-template <typename T>
-DenseMatrix<T>::DenseShadowMatrix::~DenseShadowMatrix() {
+DenseMatrix<T>::DenseShadowMatrix::~DenseShadowMatrix() {                             //destructor
     delete[] Data;
 }
 
 template <typename T>
-DenseMatrix<T>::DenseShadowMatrix::DenseShadowMatrix() {
+DenseMatrix<T>::DenseShadowMatrix::DenseShadowMatrix() {                              //default Concstructor
     DenseShadowMatrix(0,0);
 }
 
 template <typename T>
-DenseMatrix<T>::DenseShadowMatrix::DenseShadowMatrix(size_t _R, size_t _C)
+DenseMatrix<T>::DenseShadowMatrix::DenseShadowMatrix(size_t _R, size_t _C)            //empty constructor
     : Rows(_R), Columns(_C), Data(new T[Rows*Columns]) {}
 
 
 template <typename T>
-DenseMatrix<T>::DenseShadowMatrix::DenseShadowMatrix(const DenseShadowMatrix& _DSM) { //Copy Constructor
+DenseMatrix<T>::DenseShadowMatrix::DenseShadowMatrix(const DenseShadowMatrix& _DSM) { //copy constructor
     Rows = _DSM.Rows;
     Columns = _DSM.Columns;
     Data = new T[Rows*Columns];
@@ -37,7 +34,7 @@ DenseMatrix<T>::DenseShadowMatrix::DenseShadowMatrix(const DenseShadowMatrix& _D
 }
 
 template <typename T>
-DenseMatrix<T>::DenseShadowMatrix::DenseShadowMatrix(DenseShadowMatrix&& _DSM) {               //Move Constructor
+DenseMatrix<T>::DenseShadowMatrix::DenseShadowMatrix(DenseShadowMatrix&& _DSM) {      //move constructor
     //Moves resources to new DenseMatric object
     Rows = _DSM.Rows;
     Columns = _DSM.Columns;
@@ -51,7 +48,7 @@ DenseMatrix<T>::DenseShadowMatrix::DenseShadowMatrix(DenseShadowMatrix&& _DSM) {
 }
 
 template <typename T>
-DenseMatrix<T>::DenseShadowMatrix::DenseShadowMatrix(const DenseMatrix<T>& _DM) {          //Copy DenseMatrix Constructor
+DenseMatrix<T>::DenseShadowMatrix::DenseShadowMatrix(const DenseMatrix<T>& _DM) {     //copy DenseMatrix constructor
     Rows = _DM.Rows;
     Columns = _DM.Columns;
     Data = new T[Rows*Columns];
@@ -59,6 +56,14 @@ DenseMatrix<T>::DenseShadowMatrix::DenseShadowMatrix(const DenseMatrix<T>& _DM) 
         Data[x] = _DM.Data[x];
     }
 }
+
+template <typename T>
+const size_t DenseMatrix<T>::DenseShadowMatrix::Index(const size_t _R, const size_t _C) const { return (_R*Columns)+_C; }
+
+
+/*
+*     ** Overloaded Operators **
+*/
 
 template <typename T>
 bool DenseMatrix<T>::DenseShadowMatrix::operator==(DenseMatrix<T> &_DM) {
@@ -74,3 +79,11 @@ bool DenseMatrix<T>::DenseShadowMatrix::operator==(DenseMatrix<T> &_DM) {
         return false;
     }
 }
+
+template <typename T>
+const T &DenseMatrix<T>::DenseShadowMatrix::operator()(size_t _R, size_t _C) const                //overloads () operator for retrieving a
+    { return Data[Index(_R,_C)]; }                                                                 //const value at a certain location
+
+template <typename T>
+T &DenseMatrix<T>::DenseShadowMatrix::operator()(size_t _R, size_t _C)                //overloads () operator for retrieving a
+    { return Data[Index(_R,_C)]; }                                                                 //const value at a certain location
