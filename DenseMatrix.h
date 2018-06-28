@@ -7,32 +7,36 @@
 #ifndef DENSEMATRIX_H
 #define DENSEMATRIX_H
 
-#include <iostream> //cout
+#include <iostream>
 
-//#include "DenseShadowMatrix.h"
-
-using namespace std; //sets default namespace: standard
+using namespace std;
 
 template <typename T>
 class DenseMatrix {
 
 public:
     class DenseShadowMatrix {
-    public:
+    private:
         size_t Rows,Columns;
         T *Data;
+    public:
+
+        DenseShadowMatrix();
+        DenseShadowMatrix(size_t _R, size_t _C);
+        DenseShadowMatrix(const DenseShadowMatrix &_DSM);  //copy constructor
+        DenseShadowMatrix(DenseShadowMatrix &&_DSM);       //move constructor
+        DenseShadowMatrix(const DenseMatrix<T> &_DM);      //copy DenseMatrix constructor
+        virtual ~DenseShadowMatrix();                      //Destructor
 
         //Gets data[index] at (Row,Column) location in Data
         const size_t Index(const size_t _R, const size_t _C) const;
 
-        DenseShadowMatrix();
-        DenseShadowMatrix(size_t _R, size_t _C);
-        virtual ~DenseShadowMatrix();                                           //Destructor
-        DenseShadowMatrix(const DenseShadowMatrix &_DSM);                       //copy constructor
-        DenseShadowMatrix(DenseShadowMatrix &&_DSM);                            //move constructor
-        DenseShadowMatrix(const DenseMatrix<T> &_DM);                           //copy DenseMatrix constructor
+        bool operator==(DenseMatrix &_DM);                 //opeartor for comparing DenseMatrix and DenseShadowMatrix
+        T &operator()(size_t _R, size_t _C);               //overloads () operator for assigning a certain value at a certain location
+        const T &operator()(size_t _R, size_t _C) const;   //overloads () operator for retrieving a const value at a certain location
 
-        DenseShadowMatrix &operator=(const DenseShadowMatrix &_RHS) {            //overloads copy operator
+
+        DenseShadowMatrix &operator=(const DenseShadowMatrix &_RHS) {  //overloads copy operator
             //Checks for self assignment
             if (&_RHS == this) {
                 return *this;
@@ -70,15 +74,6 @@ public:
             return *this;
         };
 
-        bool operator==(DenseMatrix &_DM); //== operator overloading
-
-
-
-        T &operator()(size_t _R, size_t _C)                            //overloads () operator for assigning a
-            { return Data[Index(_R,_C)]; }                             //certain value at a certain location
-
-        const T &operator()(size_t _R, size_t _C) const                //overloads () operator for retrieving a
-            { return Data[Index(_R,_C)]; }                             //const value at a certain location
 
         friend ostream& operator<<(ostream& os, const DenseShadowMatrix &DSM) {
             os << "{";
@@ -96,44 +91,41 @@ public:
             os << " }";
             return os;
         }
+
+        //declare friend class(es)
+        friend class DenseMatrix;
+
     };
 
 
-    //beginning of DenseMatrix Class
-
+//DenseMatrix Class
+private:
     size_t Rows,Columns;
     T *Data;
 
-    //Gets data[index] at (Row,Column) location in Data
-    const size_t Index(const size_t _R, const size_t _C) const;
+public:
 
-    virtual ~DenseMatrix();                                        //Destructor
     DenseMatrix();                                                 //default constructor
     DenseMatrix(size_t _R,size_t _C);                              //default constructor
     DenseMatrix(const DenseMatrix &_DM);                           //copy constructor
     DenseMatrix(DenseMatrix &&_DM);                                //move constructor
     DenseMatrix(initializer_list< initializer_list<T> > _Il);      //initializer_list constructor
+    virtual ~DenseMatrix();                                        //Destructor
 
-    void Update(DenseShadowMatrix &_DSM);
+    //Gets data[index] at (Row,Column) location in Data
+    const size_t Index(const size_t _R, const size_t _C) const;
 
     DenseMatrix &operator=(const DenseMatrix &_RHS);               //overloads copy operator
     DenseMatrix &operator=(DenseMatrix &&_DM);                     //move operator
-
 
     //these will be used to update DenseMatrix to current shadow
     DenseMatrix &operator=(const DenseShadowMatrix &_DSM);         //copy operator
     DenseMatrix &operator=(DenseShadowMatrix &&_DSM);              //move operator
 
-    bool operator==(DenseShadowMatrix &_DSM); //== operator overloading
-
-
-    T &operator()(size_t _R, size_t _C)                            //overloads () operator for assigning a
-        { return Data[Index(_R,_C)]; }                             //certain value at a certain location
-
-    const T &operator()(size_t _R, size_t _C) const                //overloads () operator for retrieving a
-        { return Data[Index(_R,_C)]; }                             //const value at a certain location
-
-    DenseMatrix operator*(const DenseMatrix & RHS) const;            //overloads multiplication operator
+    bool operator==(DenseShadowMatrix &_DSM);                      //compares equality of DenseMatrix and DenseShadowMatrix
+    T &operator()(size_t _R, size_t _C);                           //overloads () operator for assigning a certain value at a certain location
+    const T &operator()(size_t _R, size_t _C) const;               //overloads () operator for retrieving a const value at a certain location
+    DenseMatrix operator*(const DenseMatrix & RHS) const;          //overloads multiplication operator
 
     friend ostream& operator<<(ostream& os, const DenseMatrix<T> &DM) {
         os << "{";
@@ -152,6 +144,10 @@ public:
         os << " }";
         return os;
     }
+
+    //declare friend class(es)
+    friend class DenseShadowMatrix;
+
 };
 
 #endif
