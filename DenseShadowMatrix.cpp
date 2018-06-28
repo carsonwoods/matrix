@@ -61,7 +61,7 @@ DenseMatrix<T>::DenseShadowMatrix::DenseShadowMatrix(const DenseMatrix<T>& _DM) 
 }
 
 template <typename T>
-bool DenseMatrix<T>::DenseShadowMatrix::CheckIfEqual(DenseMatrix<T> &_DM) {
+bool DenseMatrix<T>::DenseShadowMatrix::operator==(DenseMatrix<T> &_DM) {
     if ((Rows == _DM.Rows) && (Columns == _DM.Columns)) {
         for (size_t x(0); x < Rows*Columns; x++) {
             if (Data[x] != _DM.Data[x]) {

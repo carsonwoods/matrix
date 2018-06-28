@@ -19,9 +19,12 @@ int main(int argc, char *argv[]){
          << "oDM3: " << endl << oDM3 << endl
          << "oDM4: " << endl << oDM4 << endl;
 
-    DenseMatrix<double>::DenseShadowMatrix test(oDM1);
 
-    oDM2.Update(test);
+    DenseMatrix<double>::DenseShadowMatrix test(oDM1);
+    cout << "Creating DenseShadowMatrix named test that equals oDM1" << endl;
+
+    cout << "Updating oDM2 to look like DenseShadowMatrix named test." << endl;
+    oDM2 = test;
 
     cout << "oDM2: " << endl << oDM2 << endl;
 

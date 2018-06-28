@@ -70,7 +70,8 @@ public:
             return *this;
         };
 
-        bool CheckIfEqual(DenseMatrix &_DM);
+        bool operator==(DenseMatrix &_DM); //== operator overloading
+
 
 
         T &operator()(size_t _R, size_t _C)                            //overloads () operator for assigning a
@@ -117,6 +118,13 @@ public:
 
     DenseMatrix &operator=(const DenseMatrix &_RHS);               //overloads copy operator
     DenseMatrix &operator=(DenseMatrix &&_DM);                     //move operator
+
+
+    //these will be used to update DenseMatrix to current shadow
+    DenseMatrix &operator=(const DenseShadowMatrix &_DSM);         //copy operator
+    DenseMatrix &operator=(DenseShadowMatrix &&_DSM);              //move operator
+
+    bool operator==(DenseShadowMatrix &_DSM); //== operator overloading
 
 
     T &operator()(size_t _R, size_t _C)                            //overloads () operator for assigning a

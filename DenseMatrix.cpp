@@ -78,6 +78,36 @@ const size_t DenseMatrix<T>::Index(const size_t _R, const size_t _C) const { ret
 *     ** Overloaded Operators **
 */
 
+//Overloads multiplication operator
+template <typename T>
+DenseMatrix<T> DenseMatrix<T>::operator*(const DenseMatrix& RHS) const  {
+    const DenseMatrix<T> &LHS(*this);
+
+    //Test for dimensional mismatch
+    if (((LHS.Columns != RHS.Rows))) {
+        printf("Error: Columns of LHS and Rows of RHS must Match.\n");
+        printf("Current Columns: %ld\n",LHS.Columns);
+        printf("Current Rows: %ld\n",RHS.Rows);
+        return DenseMatrix();
+    }
+
+
+    DenseMatrix<T> RET(LHS.Rows,RHS.Columns);
+
+    double Sum = 0;
+
+    for (size_t iRow(0); iRow < LHS.Rows; iRow++) {
+        for (size_t iCol(0); iCol < RHS.Columns; iCol++) {
+            Sum = 0;
+            for (size_t iSum(0); iSum < RHS.Rows; iSum++) {
+                Sum += LHS(iRow, iSum) * RHS(iSum,iCol);
+            }
+            RET(iRow, iCol) = Sum;
+        }
+    }
+    return RET;
+}
+
 //Overloads assignment operator for copy
 template <typename T>
 DenseMatrix<T> & DenseMatrix<T>::operator=(const DenseMatrix &_RHS) {
@@ -120,44 +150,57 @@ DenseMatrix<T> & DenseMatrix<T>::operator=(DenseMatrix &&_DM) {
     return *this;
 }
 
-//Overloads multiplication operator
+
+
+//Overloads copy operator to update data from DenseShadowMatrix
 template <typename T>
-DenseMatrix<T> DenseMatrix<T>::operator*(const DenseMatrix& RHS) const  {
-    const DenseMatrix<T> &LHS(*this);
+DenseMatrix<T>& DenseMatrix<T>::operator=(const DenseMatrix<T>::DenseShadowMatrix &_RHS) {
 
-    //Test for dimensional mismatch
-    if (((LHS.Columns != RHS.Rows))) {
-        printf("Error: Columns of LHS and Rows of RHS must Match.\n");
-        printf("Current Columns: %ld\n",LHS.Columns);
-        printf("Current Rows: %ld\n",RHS.Rows);
-        return DenseMatrix();
+    //Checks for dimensinal mismatch
+    if (!((this->Rows == _RHS.Rows && this->Columns == _RHS.Columns))) {
+        //If it occures Data is cleared then resized.
+        delete[] Data;
+        this->Rows = _RHS.Rows;
+        this->Columns = _RHS.Columns;
+        Data = new T[Rows*Columns];
     }
 
-
-    DenseMatrix<T> RET(LHS.Rows,RHS.Columns);
-
-    double Sum = 0;
-
-    for (size_t iRow(0); iRow < LHS.Rows; iRow++) {
-        for (size_t iCol(0); iCol < RHS.Columns; iCol++) {
-            Sum = 0;
-            for (size_t iSum(0); iSum < RHS.Rows; iSum++) {
-                Sum += LHS(iRow, iSum) * RHS(iSum,iCol);
-            }
-            RET(iRow, iCol) = Sum;
-        }
+    //Populates this->Data with data from parameter
+    for (size_t iElement(0); iElement < (Rows*Columns); iElement++) {
+        Data[iElement] = _RHS.Data[iElement];
     }
-    return RET;
+    return *this;
 }
 
+//Overloads move operator to move DenseShadowMatrix into DenseMatrix
+template <typename T>
+DenseMatrix<T>& DenseMatrix<T>::operator=(DenseMatrix<T>::DenseShadowMatrix &&_DSM) {
+    if (this != &_DSM) {
+        delete[] Data; //Ensures Data is clear before proceeding
+
+        Data = _DSM.Data;
+        Rows = _DSM.Rows;
+        Columns = _DSM.Columns;
+
+        //Releases resources of Dense Matrix parameter
+        _DSM.Data = nullptr;
+        _DSM.Rows = 0;
+        _DSM.Columns = 0;
+    }
+    return *this;
+}
 
 template <typename T>
-void DenseMatrix<T>::Update(DenseMatrix<T>::DenseShadowMatrix &_DSM) {
-    //brings DenseMatrix up to date with parameter shadow matrix.
-    Rows = _DSM.Rows;
-    Columns = _DSM.Columns;
-    Data = new T[Rows*Columns];
-    for (size_t x(0); x < _DSM.Rows*_DSM.Columns; x++) {
-        Data[x] = _DSM.Data[x];
+bool DenseMatrix<T>::operator==(DenseMatrix<T>::DenseShadowMatrix &_DSM) {
+    if ((Rows == _DSM.Rows) && (Columns == _DSM.Columns)) {
+        for (size_t x(0); x < Rows*Columns; x++) {
+            if (Data[x] != _DSM.Data[x]) {
+                return false;
+            }
+        }
+        return true;
+    } else {
+        cout << "false" << endl;
+        return false;
     }
 }
