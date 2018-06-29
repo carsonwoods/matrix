@@ -3,5 +3,5 @@
 
 all : TestMatrix
 
-TestMatrix: main.cpp DenseMatrix.h DenseMatrix.cpp
-	g++ -std=c++17 -Wall main.cpp DenseMatrix.cpp -o TestMatrix
+TestMatrix: main.cpp DenseMatrix.h DenseMatrix.cpp DenseShadowMatrix.cpp
+	g++ -std=c++17 -Wall main.cpp DenseMatrix.cpp DenseShadowMatrix.cpp -o TestMatrix
