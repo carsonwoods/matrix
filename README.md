@@ -6,7 +6,7 @@ Will Later be implemented in Parallel
 # Features Under Development
 CUDA Acceleration
 
-# Long Feature Plan
+# Long Term Feature Plan
 AMD ROCM Acceleration Support
 MPI based CPU Parallel Acceleration.
 
