@@ -7,8 +7,8 @@ Will Later be implemented in Parallel
 CUDA Acceleration
 
 # Long Term Feature Plan
-AMD ROCM Acceleration Support
-MPI based CPU Parallel Acceleration.
+AMD ROCM Acceleration Support.\n
+MPI based CPU Parallel Acceleration.\n
 
 # Testing Instructions
 To test run the following command from the '/matrix' directory:
