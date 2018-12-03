@@ -29,7 +29,7 @@ public:
         virtual ~DenseShadowMatrix();                      //Destructor
 
         //Gets data[index] at (Row,Column) location in Data
-        const size_t Index(const size_t _R, const size_t _C) const;
+        size_t Index(const size_t _R, const size_t _C) const;
 
         bool operator==(DenseMatrix &_DM);                 //opeartor for comparing DenseMatrix and DenseShadowMatrix
         T &operator()(size_t _R, size_t _C);               //overloads () operator for assigning a certain value at a certain location
@@ -114,7 +114,7 @@ public:
     virtual ~DenseMatrix();                                        //Destructor
 
     //Gets data[index] at (Row,Column) location in Data
-    const size_t Index(const size_t _R, const size_t _C) const;
+    size_t Index(const size_t _R, const size_t _C) const;
 
     DenseMatrix &operator=(const DenseMatrix &_RHS);               //overloads copy operator
     DenseMatrix &operator=(DenseMatrix &&_DM);                     //move operator
