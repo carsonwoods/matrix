@@ -35,4 +35,5 @@
 output
 TestMatrix
 TestShadowMatrix
+TestCuda
 *#*
