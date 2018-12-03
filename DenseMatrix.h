@@ -58,6 +58,7 @@ public:
             return *this;
         }
 
+
         DenseShadowMatrix &operator=(DenseShadowMatrix &&_DSM){                 //move operator
             if (this != &_DSM) {
                 delete[] Data; //Ensures Data is clear before proceeding
