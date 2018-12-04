@@ -27,8 +27,8 @@ int main() {
         oDM2{{4,9},{12347,835},{91,7532}};
 
 
-    cudaMalloc(&oDM1, sizeof(DenseMatrix<float>))
-    cudaMalloc(&oDM2, sizeof(DenseMatrix<float>))
+    cudaMalloc((void **)&oDM1, sizeof(DenseMatrix<float>));t
+    cudaMalloc((void **)&oDM2, sizeof(DenseMatrix<float>));
 
 
     FGEMM<<<1, 1>>>(N, oDM1, oDM2)
