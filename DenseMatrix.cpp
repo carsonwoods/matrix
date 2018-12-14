@@ -20,7 +20,8 @@ DenseMatrix<T>::DenseMatrix() {                                    //Default Con
 
 template <typename T>
 DenseMatrix<T>::DenseMatrix(size_t _R,size_t _C) :                 //Initializer constructor
-    Rows(_R), Columns(_C), Data(new T[Rows*Columns]) {}
+    Rows(_R), Columns(_C), Data(new T[Rows*Columns]) {
+    }
 
 template <typename T>
 DenseMatrix<T>::DenseMatrix(const DenseMatrix& _DM) {              //Copy Constructor
@@ -70,7 +71,7 @@ DenseMatrix<T>::DenseMatrix(initializer_list< initializer_list< T > > _Il) { //I
 
 //Gets data[index] at (Row,Column) location in Data
 template <typename T>
-size_t DenseMatrix<T>::Index(const size_t _R, const size_t _C) const { return (_R*Columns)+_C; }
+const size_t DenseMatrix<T>::Index(const size_t _R, const size_t _C) const { return size_t((_R*Columns)+_C); }
 
 
 /*
