@@ -12,11 +12,8 @@ using namespace std;
 __global__
 void FGEMM(int n, DenseMatrix<float> *a, DenseMatrix<float> *b, DenseMatrix<float> *c) {
 
-    int index = blockIdx.x * blockDim.x + threadIdx.x;
-    int blockSize = blockDim.x; //NOTE: this would also be the amount of values in shared memory (or it should be anyways)
-
     // Will store calculated results from each thread 
-    __shared__ float calculatedResults[blockDim.x]; 
+    extern __shared__ float calculatedResults[blockDim.x]; 
 
     if (a.Columns == b.Rows) {
 
@@ -29,7 +26,7 @@ void FGEMM(int n, DenseMatrix<float> *a, DenseMatrix<float> *b, DenseMatrix<floa
     	float rowVal =  a(blockIdx.x, threadIdx.x);
 
     	// Gets value from column of DenseMatrix B
-    	float colVal = b(threadIDx.x, blockIdx.x);
+    	float colVal = b(threadIdx.x, blockIdx.x);
 
 
     	// Perform thread operation
@@ -40,7 +37,7 @@ void FGEMM(int n, DenseMatrix<float> *a, DenseMatrix<float> *b, DenseMatrix<floa
     	// Resulting value will be assigned to location in DenseMatrix c
     	// This can be made much faster by doing a parallel reduction but this can be added later
     	if (threadIdx.x == 1) {
-    		for (int i = i; i < calculatedResults.length(); i++) {
+    		for (int i = 1; i < calculatedResults.length(); i++) {
     			calculatedResults[0] += calculatedResults[i];
     		}
 
@@ -65,7 +62,7 @@ int main() {
     cudaMalloc(&oDM2, sizeof(DenseMatrix<float>));
 
 
-    FGEMM<<<1, 1>>>(N, oDM1, oDM2)
+    //FGEMM<<<1, 1>>>(N, oDM1, oDM2);
 
 
 }
