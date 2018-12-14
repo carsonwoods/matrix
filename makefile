@@ -4,7 +4,7 @@
 all : TestMatrix
 
 TestMatrix: main.cpp DenseMatrix.h DenseMatrix.cpp DenseShadowMatrix.cpp
-	g++ -std=c++17 -Wall main.cpp DenseMatrix.cpp DenseShadowMatrix.cpp -o TestMatrix
+	g++ -std=c++17 -Wall main.cpp -o TestMatrix
 
 TestCuda: DenseMatrixGEMM.cu DenseMatrix.h DenseMatrix.cpp
 	nvcc -std=c++11 DenseMatrixGEMM.cu DenseMatrix.cpp -o DenseMatrixTest
