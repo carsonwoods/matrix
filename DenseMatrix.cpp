@@ -71,7 +71,7 @@ DenseMatrix<T>::DenseMatrix(initializer_list< initializer_list< T > > _Il) { //I
 
 //Gets data[index] at (Row,Column) location in Data
 template <typename T>
-const size_t DenseMatrix<T>::Index(const size_t _R, const size_t _C) const { return size_t((_R*Columns)+_C); }
+size_t DenseMatrix<T>::Index(const size_t _R, const size_t _C) const { return size_t((_R*Columns)+_C); }
 
 
 /*

@@ -58,7 +58,7 @@ DenseMatrix<T>::DenseShadowMatrix::DenseShadowMatrix(const DenseMatrix<T>& _DM) 
 }
 
 template <typename T>
-const size_t DenseMatrix<T>::DenseShadowMatrix::Index(const size_t _R, const size_t _C) const { return size_t((_R*Columns)+_C); }
+size_t DenseMatrix<T>::DenseShadowMatrix::Index(const size_t _R, const size_t _C) const { return size_t((_R*Columns)+_C); }
 
 
 /*
