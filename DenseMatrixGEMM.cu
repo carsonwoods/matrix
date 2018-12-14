@@ -13,7 +13,7 @@ __global__
 void FGEMM(int n, DenseMatrix<float> *a, DenseMatrix<float> *b, DenseMatrix<float> *c) {
 
     // Will store calculated results from each thread 
-    extern __shared__ float calculatedResults[blockDim.x]; 
+    extern __shared__ float calculatedResults[]; 
 
     if (a.Columns == b.Rows) {
 
@@ -58,7 +58,7 @@ int main() {
         oDM2{{4,9},{12347,835},{91,7532}};
 
 
-    cudaMalloc(&oDM1, sizeof(DenseMatrix<float>));t
+    cudaMalloc(&oDM1, sizeof(DenseMatrix<float>));
     cudaMalloc(&oDM2, sizeof(DenseMatrix<float>));
 
 
