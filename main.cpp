@@ -14,6 +14,7 @@ int main(int argc, char *argv[]){
         oDM4(oDM3);
 
 
+
     cout << "oDM1: " << endl << oDM1 << endl
          << "oDM2: " << endl << oDM2 << endl
          << "oDM3: " << endl << oDM3 << endl
