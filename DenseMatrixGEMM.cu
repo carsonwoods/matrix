@@ -37,10 +37,10 @@ void FGEMM(int n, DenseMatrix<float> *a, DenseMatrix<float> *b, DenseMatrix<floa
     	// Resulting value will be assigned to location in DenseMatrix c
     	// This can be made much faster by doing a parallel reduction but this can be added later
     	
-    	__syncthreads()
+    	__syncthreads();
 
     	if (threadIdx.x == 1) {
-	    	for (int i = 1; i < blockDim.x; i++) {
+	    	for (int i = 1; i < sizeof(calculatedResults)/sizeof(calculatedResults[0]); i++) {
 	    			calculatedResults[0] += calculatedResults[i];
 	    		}
 
