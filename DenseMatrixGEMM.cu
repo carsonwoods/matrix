@@ -15,7 +15,7 @@ void FGEMM(int n, DenseMatrix<float> *a, DenseMatrix<float> *b, DenseMatrix<floa
     // Will store calculated results from each thread 
     extern __shared__ float calculatedResults[]; 
 
-    if (a.GetRows() == b.GetColumns()) {
+    if (a->GetRows() == b->GetColumns()) {
 
     	// Every threadblock gets at least 1 row of matrix A and 1 column of matrix B
     	// There could be an exception to this if matrices are particularly large
