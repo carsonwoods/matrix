@@ -39,10 +39,8 @@ void FGEMM(int n, DenseMatrix<float> *a, DenseMatrix<float> *b, DenseMatrix<floa
     	
     	__syncthreads()
 
-    	int resultArraySize = sizeof(calculatedResults)/sizeof(float);
-
     	if (threadIdx.x == 1) {
-    		for (int i = 1; i < resultArraySize; i++) {
+    	for (int i = 1; i < blockDim.x; i++) {
     			calculatedResults[0] += calculatedResults[i];
     		}
 
