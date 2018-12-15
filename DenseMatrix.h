@@ -93,6 +93,9 @@ public:
             return os;
         }
 
+        size_t GetRows();
+        size_t GetColumns();
+
         //declare friend class(es)
         friend class DenseMatrix;
 
@@ -145,6 +148,9 @@ public:
         os << " }";
         return os;
     }
+
+    size_t GetRows();
+    size_t GetColumns();
 
     //declare friend class(es)
     friend class DenseShadowMatrix;

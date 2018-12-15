@@ -81,9 +81,16 @@ bool DenseMatrix<T>::DenseShadowMatrix::operator==(DenseMatrix<T> &_DM) {
 }
 
 template <typename T>
-const T &DenseMatrix<T>::DenseShadowMatrix::operator()(size_t _R, size_t _C) const                //overloads () operator for retrieving a
+const T &DenseMatrix<T>::DenseShadowMatrix::operator()(size_t _R, size_t _C) const                 //overloads () operator for retrieving a
     { return Data[Index(_R,_C)]; }                                                                 //const value at a certain location
 
 template <typename T>
-T &DenseMatrix<T>::DenseShadowMatrix::operator()(size_t _R, size_t _C)                //overloads () operator for retrieving a
+T &DenseMatrix<T>::DenseShadowMatrix::operator()(size_t _R, size_t _C)                             //overloads () operator for retrieving a
     { return Data[Index(_R,_C)]; }                                                                 //const value at a certain location
+
+template <typename T>
+size_t DenseMatrix<T>::DenseShadowMatrix::GetRows() {return Rows;}
+
+template <typename T>
+size_t DenseMatrix<T>::DenseShadowMatrix::GetColumns() {return Columns;}
+

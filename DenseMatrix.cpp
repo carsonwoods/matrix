@@ -210,3 +210,12 @@ const T &DenseMatrix<T>::operator()(size_t _R, size_t _C) const                 
 template <typename T>
 T &DenseMatrix<T>::operator()(size_t _R, size_t _C)                             //overloads () operator for retrieving a
     { return Data[Index(_R,_C)]; }                                              //const value at a certain location
+
+
+template <typename T>
+size_t DenseMatrix<T>::GetRows() {return Rows;}
+
+template <typename T>
+size_t DenseMatrix<T>::GetColumns() {return Columns;}
+
+
