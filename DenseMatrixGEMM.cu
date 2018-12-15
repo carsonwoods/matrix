@@ -40,9 +40,9 @@ void FGEMM(int n, DenseMatrix<float> *a, DenseMatrix<float> *b, DenseMatrix<floa
     	__syncthreads()
 
     	if (threadIdx.x == 1) {
-    	for (int i = 1; i < blockDim.x; i++) {
-    			calculatedResults[0] += calculatedResults[i];
-    		}
+	    	for (int i = 1; i < blockDim.x; i++) {
+	    			calculatedResults[0] += calculatedResults[i];
+	    		}
 
     		(*c)(blockIdx.x, blockIdx.x) = calculatedResults[0];
      	}
