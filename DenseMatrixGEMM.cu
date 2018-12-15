@@ -36,8 +36,13 @@ void FGEMM(int n, DenseMatrix<float> *a, DenseMatrix<float> *b, DenseMatrix<floa
     	// Perform reduction on calculated values to add them up.
     	// Resulting value will be assigned to location in DenseMatrix c
     	// This can be made much faster by doing a parallel reduction but this can be added later
+    	
+    	__syncthreads()
+
+    	int resultArraySize = sizeof(calculatedResults)/sizeof(float);
+
     	if (threadIdx.x == 1) {
-    		for (int i = 1; i < sizeof(calculatedResults)/sizeof(float); i++) {
+    		for (int i = 1; i < resultArraySize; i++) {
     			calculatedResults[0] += calculatedResults[i];
     		}
 
