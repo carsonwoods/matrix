@@ -41,7 +41,7 @@ void FGEMM(int n, DenseMatrix<float> *a, DenseMatrix<float> *b, DenseMatrix<floa
     			calculatedResults[0] += calculatedResults[i];
     		}
 
-    		DenseMatrix(blockIdx.x, blockIdx.x) = calculatedResults[0];
+    		(*c)(blockIdx.x, blockIdx.x) = calculatedResults[0];
      	}
     }
 
