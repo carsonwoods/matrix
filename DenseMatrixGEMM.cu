@@ -23,10 +23,10 @@ void FGEMM(int n, DenseMatrix<float> *a, DenseMatrix<float> *b, DenseMatrix<floa
 		// Then it does the operation on those values
 
 		// Gets value from row of DenseMatrix A 
-    	float rowVal =  a(blockIdx.x, threadIdx.x);
+    	float rowVal =  *a(blockIdx.x, threadIdx.x);
 
     	// Gets value from column of DenseMatrix B
-    	float colVal = b(threadIdx.x, blockIdx.x);
+    	float colVal = *b(threadIdx.x, blockIdx.x);
 
 
     	// Perform thread operation
