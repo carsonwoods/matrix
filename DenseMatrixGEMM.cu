@@ -30,7 +30,7 @@ void FGEMM(int n, DenseMatrix<float> *a, DenseMatrix<float> *b, DenseMatrix<floa
 
 
     	// Perform thread operation
-    	float calculatedResults[threadIdx.x] = rowVal * colVal;
+    	calculatedResults[threadIdx.x] = rowVal * colVal;
 
 
     	// Perform reduction on calculated values to add them up.
