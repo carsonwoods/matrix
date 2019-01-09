@@ -56,17 +56,20 @@ int main() {
 
 	int N = 6;
     
+    // Host Copies
     DenseMatrix<float>
         oDM1{{1,2,3},{4,5,6}},
         oDM2{{4,9},{12347,835},{91,7532}};
+        
+    //Device Copies    
+    DenseMatrix<float> *cDM1, *cDM2;
+
+    cudaMalloc((void**)&cDM1, sizeof(DenseMatrix<float>));
+    cudaMalloc((void**)&cDM2, sizeof(DenseMatrix<float>));
+    
+    cudaMemcpy(oDM1, &cDM1, sizeof(DenseMatrix<float>), cudaMemcpyHostToDevice);
+    cudaMemcpy(oDM2, &cDM2, sizeof(DenseMatrix<float>), cudaMemcpyHostToDevice);
 
 
-    cudaMalloc((void**)&oDM1, sizeof(DenseMatrix<float>));
-    cudaMalloc((void**)&oDM2, sizeof(DenseMatrix<float>));
-
-
-    //FGEMM<<<1, 1>>>(N, oDM1, oDM2);
-
-
+    //FGEMM<<<1, 1>>>(N, oDM1, oDM2);   
 }
-

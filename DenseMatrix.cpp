@@ -4,6 +4,12 @@
 *   2018
 */
 
+#ifdef __CUDACC__
+#define CUDA_HOSTDEV __host__ __device__
+#else
+#define CUDA_HOSTDEV
+#endif
+
 #include "DenseMatrix.h"
 
 using namespace std;
@@ -71,7 +77,7 @@ DenseMatrix<T>::DenseMatrix(initializer_list< initializer_list< T > > _Il) { //I
 
 //Gets data[index] at (Row,Column) location in Data
 template <typename T>
-size_t DenseMatrix<T>::Index(const size_t _R, const size_t _C) const { return size_t((_R*Columns)+_C); }
+CUDA_HOSTDEV size_t DenseMatrix<T>::Index(const size_t _R, const size_t _C) const { return size_t((_R*Columns)+_C); }
 
 
 /*
@@ -204,18 +210,18 @@ bool DenseMatrix<T>::operator==(DenseMatrix<T>::DenseShadowMatrix &_DSM) {
 }
 
 template <typename T>
-const T &DenseMatrix<T>::operator()(size_t _R, size_t _C) const                 //overloads () operator for retrieving a
+CUDA_HOSTDEV const T &DenseMatrix<T>::operator()(size_t _R, size_t _C) const                 //overloads () operator for retrieving a
     { return Data[Index(_R,_C)]; }                                              //const value at a certain location
 
 template <typename T>
-T &DenseMatrix<T>::operator()(size_t _R, size_t _C)                             //overloads () operator for retrieving a
+CUDA_HOSTDEV T &DenseMatrix<T>::operator()(size_t _R, size_t _C)                             //overloads () operator for retrieving a
     { return Data[Index(_R,_C)]; }                                              //const value at a certain location
 
 
 template <typename T>
-size_t DenseMatrix<T>::GetRows() {return Rows;}
+CUDA_HOSTDEV size_t DenseMatrix<T>::GetRows() {return Rows;}
 
 template <typename T>
-size_t DenseMatrix<T>::GetColumns() {return Columns;}
+CUDA_HOSTDEV size_t DenseMatrix<T>::GetColumns() {return Columns;}
 
 

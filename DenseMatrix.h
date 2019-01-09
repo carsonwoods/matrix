@@ -7,6 +7,14 @@
 #ifndef DENSEMATRIX_H
 #define DENSEMATRIX_H
 
+
+#ifdef __CUDACC__
+#define CUDA_HOSTDEV __host__ __device__
+#else
+#define CUDA_HOSTDEV
+#endif
+
+
 #include <iostream>
 
 using namespace std;
@@ -29,11 +37,11 @@ public:
         virtual ~DenseShadowMatrix();                      //Destructor
 
         // Gets data[index] at (Row,Column) location in Data
-        size_t Index(const size_t _R, const size_t _C) const;
+        CUDA_HOSTDEV size_t Index(const size_t _R, const size_t _C) const;
 
         bool operator==(DenseMatrix &_DM);                 //opeartor for comparing DenseMatrix and DenseShadowMatrix
-        T &operator()(size_t _R, size_t _C);               //overloads () operator for assigning a certain value at a certain location
-        const T &operator()(size_t _R, size_t _C) const;   //overloads () operator for retrieving a const value at a certain location
+        CUDA_HOSTDEV T &operator()(size_t _R, size_t _C);               //overloads () operator for assigning a certain value at a certain location
+        CUDA_HOSTDEV const T &operator()(size_t _R, size_t _C) const;   //overloads () operator for retrieving a const value at a certain location
 
 
         DenseShadowMatrix &operator=(const DenseShadowMatrix &_RHS) {  //overloads copy operator
@@ -93,8 +101,8 @@ public:
             return os;
         }
 
-        size_t GetRows();
-        size_t GetColumns();
+        CUDA_HOSTDEV size_t GetRows();
+        CUDA_HOSTDEV size_t GetColumns();
 
         //declare friend class(es)
         friend class DenseMatrix;
