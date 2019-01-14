@@ -55,21 +55,59 @@ void FGEMM(int n, DenseMatrix<float> *a, DenseMatrix<float> *b, DenseMatrix<floa
 int main() {
 
 	int N = 6;
+    cudaError_t error;
     
     // Host Copies
     DenseMatrix<float>
         oDM1{{1,2,3},{4,5,6}},
-        oDM2{{4,9},{12347,835},{91,7532}};
+        oDM2{{4,9},{12347,835},{91,7532}},
+        oDM3(2,2);
         
     //Device Copies    
-    DenseMatrix<float> *cDM1, *cDM2;
+    DenseMatrix<float> *cDM1, *cDM2, *cDM3;
 
-    cudaMalloc((void**)&cDM1, sizeof(DenseMatrix<float>));
-    cudaMalloc((void**)&cDM2, sizeof(DenseMatrix<float>));
+    error = cudaMalloc((void**)&cDM1, sizeof(oDM1));
+    if (error != cudaSuccess) {
+        cout << "CUDA Error" << endl;
+        cout << cudaGetErrorString(error) << endl;
+    }
     
-    cudaMemcpy(oDM1, &cDM1, sizeof(DenseMatrix<float>), cudaMemcpyHostToDevice);
-    cudaMemcpy(oDM2, &cDM2, sizeof(DenseMatrix<float>), cudaMemcpyHostToDevice);
+    error = cudaMalloc((void**)&cDM2, sizeof(oDM2));
+    if (error != cudaSuccess) {
+        cout << "CUDA Error" << endl;
+        cout << cudaGetErrorString(error) << endl;
+    }
+    
+    error = cudaMalloc((void**)&cDM3, sizeof(oDM2));
+    if (error != cudaSuccess) {
+        cout << "CUDA Error" << endl;
+        cout << cudaGetErrorString(error) << endl;
+    }
+    
+    error = cudaMemcpy(oDM1, &cDM1, sizeof(DenseMatrix<float>), cudaMemcpyHostToDevice);
+    if (error != cudaSuccess) {
+        cout << "CUDA Error" << endl;
+        cout << cudaGetErrorString(error) << endl;
+    }
+    
+    error = cudaMemcpy(&oDM2, cDM2, sizeof(DenseMatrix<float>), cudaMemcpyHostToDevice);
+    if (error != cudaSuccess) {
+        cout << "CUDA Error" << endl;
+        cout << cudaGetErrorString(error) << endl;
+    }
 
 
-    //FGEMM<<<1, 1>>>(N, oDM1, oDM2);   
+    FGEMM<<<3, 2>>>(N, cDM1, cDM2, cDM3);
+    
+    
+    cudaDeviceSynchronize();
+    
+    error = cudaMemcpy(&oDM3, cDM3, sizeof(DenseMatrix<float>), cudaMemcpyDeviceToHost);
+    if (error != cudaSuccess) {
+        cout << "CUDA Error" << endl;
+        cout << cudaGetErrorString(error) << endl;
+    }
+    
+    cout << "Done!" << endl;
+    cout << oDM3 << endl;
 }
